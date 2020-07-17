@@ -13,10 +13,10 @@ class client:
         self.con_params = {'key':self.player_key}
 
         #check connection
-        if requests.get(self.game_url).status_code == 200:
-            print('Valid Cnnection Established')
-        else:
-            raise ConnectionError
+        # if requests.get(self.game_url).status_code == 200:
+        #     print('Valid Cnnection Established')
+        # else:
+        #     raise ConnectionError
 
         #make Endpoints
         self.board_ep = self.game_url + 'board/'
@@ -68,8 +68,8 @@ class client:
 
     
 
-url = 'http://localhost:8080'
-client1 = client('key1', url)
+# url = 'http://localhost:8080'
+# client1 = client('key1', url)
 
-print(client1.board)
+# print(client1.board)
 
