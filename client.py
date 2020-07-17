@@ -13,7 +13,7 @@ class client:
         self.con_params = {'key':self.player_key}
 
         #check connection
-        if requests.get(self.game_url).status_code = 200:
+        if requests.get(self.game_url).status_code == 200:
             print('Valid Cnnection Established')
         else:
             raise ConectionError
