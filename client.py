@@ -69,5 +69,7 @@ class client:
     
 
 url = 'http://localhost:8080'
-client = client('key1', url)
+client1 = client('key1', url)
+
+print(client1.board)
 
