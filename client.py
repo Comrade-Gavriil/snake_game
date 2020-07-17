@@ -68,8 +68,8 @@ class client:
 
     
 
-url = 'http://localhost:8080'
-client1 = client('key1', url)
+# url = 'http://localhost:8080'
+# client1 = client('key1', url)
 
-print(client1.board)
+# print(client1.board)
 
