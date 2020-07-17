@@ -16,7 +16,7 @@ class client:
         if requests.get(self.game_url).status_code == 200:
             print('Valid Cnnection Established')
         else:
-            raise ConectionError
+            raise ConnectionError
 
         #make Endpoints
         self.board_ep = self.game_url + 'board/'
@@ -29,27 +29,28 @@ class client:
         r = requests.get(self.board_ep, params= self.con_params)
         return r.json()
 
-    def get_board(self):
+    @property
+    def board(self):
         #method to get only board data
-        data = _get_board_data()
+        data = self._get_board_data()
         return data['board']
 
-    
-    def get_heads(self):
+    @property
+    def heads(self):
         #method to get only heads data
-        data = _get_board_data()
+        data = self._get_board_data()
         return data['heads']
 
-    
-    def get_food(self):
+    @property
+    def food(self):
         #method to get only food data
-        data = _get_board_data()
+        data = self._get_board_data()
         return data['food']
     
-
+    @property
     def move_needed(self):
         #tells us if we need to move
-        r = requests.get(self.move_needed_ep, , params= self.con_params)
+        r = requests.get(self.move_needed_ep, params= self.con_params)
         data = r.json()
         return data
     
@@ -62,11 +63,11 @@ class client:
         payload['move'] = move_id
 
         #makes post
-        requests.post(self.move_needed_ep, , params= params)
+        requests.post(self.move_needed_ep, params= payload)
 
 
     
 
-
-
+url = 'http://localhost:8080'
+client = client('key1', url)
 
