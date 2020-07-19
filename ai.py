@@ -20,10 +20,10 @@ class ai(client): #inherits client class
 
     
 
-    def _make_path(self, src, dst, map): #uses the A* path find algo
+    def _make_path(self, src, dst, board): #uses the A* path find algo
         
         #could be manipulated or non manipulated board
-        board = map
+        board = 
         
         #init positions
         x_0 = src[0]
@@ -179,3 +179,8 @@ class ai(client): #inherits client class
 
         #overall good programing just needs work on the syntax and conventions
 
+
+url = '192.168.1.6'
+key = 'key0'
+snake = ai(key,url)
+print(snake.board)
