@@ -1,10 +1,11 @@
 from client import client
 import numpy as np
+from time import sleep
 
 class ai(client): #inherits client class
 
     def __init__ (self,key,url):
-        super.__init__(key, url)
+        super().__init__(key, url)
     
     @staticmethod
     def vector_add(v1,v2):
@@ -18,12 +19,25 @@ class ai(client): #inherits client class
     def vector_mult(v1,v2):
         return [ (v1[0]*v2[0]), (v1[1] * v2[1])]
 
-    
+    def coilision_aviodance(self, board):
+        map_aviod = board
+        snakes = self.heads[1:3]
+        for head in snakes:
+            connections = [[0,1],[0,-1],[1,0],[-1,0]]
+            try:
+                for edge in connections:
+                    cord = self.vector_add(head,edge)
+                    print(cord[0])
+                    map_aviod[cord[0]][cord[1]] = 1
+            except IndexError:
+                pass
+        return map_aviod
+
 
     def _make_path(self, src, dst, board): #uses the A* path find algo
         
         #could be manipulated or non manipulated board
-        board = 
+        board = board
         
         #init positions
         x_0 = src[0]
@@ -34,20 +48,17 @@ class ai(client): #inherits client class
 
         # gscore is the distance from the desination
         gScore_map = np.empty((len(board),len(board))) 
-        gScore_map[:] = 10000000
+        gScore_map[:] = 1000
 
         gScore_map[x_0][y_0] = 0
 
-        # fscore is the distance from the desination and goal
-        fScore_map = np.empty((len(board),len(board)))
-        fScore_map[:] = 10000000
-
-        fScore_map[x_0][y_0] = h(src)
 
         # numb to card and cord to numb are becuase im dumb
         
         def numb_to_cord (numb): #takes number and turns to cord
-            a = np.arange(len(board)*len(board)).resize((len(board),len(board)))
+
+            a = np.arange(len(board)*len(board))
+            a = np.resize(a,(len(board),len(board)))
             cord = np.where(a == numb)
             return [cord[0][0], cord[1][0]]
         
@@ -65,7 +76,7 @@ class ai(client): #inherits client class
         def reconstucted_path(current): #make a path from the dst to the src, returns list
             totalpath = []
             totalpath.insert(0,current)
-            while current in came_from:
+            while current in came_from.keys():
                 current = came_from[current]
                 totalpath.insert(0,current)
             
@@ -92,6 +103,9 @@ class ai(client): #inherits client class
 
                 elif fScore == best_value:
                     good_nodes.append(node)
+            
+
+            
 
             
             best_node = None
@@ -105,6 +119,12 @@ class ai(client): #inherits client class
 
             
             return best_node
+
+         # fscore is the distance from the desination and goal
+        fScore_map = np.empty((len(board),len(board)))
+        fScore_map[:] = 1000
+
+        fScore_map[x_0][y_0] = h(src)
 
         
         while len(open_set) != 0: #A* algo
@@ -121,66 +141,88 @@ class ai(client): #inherits client class
 
             #entire chunk finds the niehbors to the node
             connections = [[0,1],[0,-1],[1,0],[-1,0]]
-            nieghbors = []
+            neighbors = []
             for edge in connections:
-                nieghbor = self.vector_add(current, edge)
-                if board[nieghbor[0]][[nieghbor[1]]] < 0: #checks for colisions
-                    nieghbors.append(nieghbor)
-            
+                try:
+                    neighbor = self.vector_add(current, edge)
+                    if board[neighbor[0]][neighbor[1]] < 0: #checks for colisions
+                        neighbors.append(neighbor)
+                except IndexError:
+                    pass
 
-            for nieghbor in nieghbors: #intarates through each nieghbor
+
+            for neighbor in neighbors: #intarates through each neighbor
                 tentative_gScore = gScore_map[current[0]][[current[1]]] + 1 #probalbly gscore is just the gscore of the curent node and the distance wich is always 1
 
 
-                if tentative_gScore < gScore_map[nieghbor[0]][[nieghbor[1]]]: #updates gscore on nieghbor if it is lower
-                    came_from[cord_to_numb(current)] = cord_to_numb(nieghbor)
-                    gScore_map[nieghbor[0]][[nieghbor[1]]] = tentative_gScore
-                    fScore_map[nieghbor[0]][[nieghbor[1]]] = tentative_gScore + h(nieghbor)
 
-                    if nieghbor not in open_set:
-                        open_set.append(nieghbor)
+                if tentative_gScore < gScore_map[neighbor[0]][[neighbor[1]]]: #updates gscore on neighbor if it is lower
+                    came_from[cord_to_numb(neighbor)] = cord_to_numb(current)
+                    gScore_map[neighbor[0]][[neighbor[1]]] = tentative_gScore
+                    fScore_map[neighbor[0]][[neighbor[1]]] = tentative_gScore + h(neighbor)
+
+                    if neighbor not in open_set:
+                        open_set.append(neighbor)
     
 
     def best_cordinate(self, map): 
         path = self._make_path(self.heads[0], self.food, map)
-        return path[0]
+        up = [0,1]
+        move = self.vector_add(self.heads[0], up)
+        try:
+            return path[1]
+        except TypeError:
+            print('help')
+            return move
 
         
-    def _direction(self): #forgoten parameter
-        self.current_x_cord = self.heads()[0][0] #self doesn't need to be used bc its a local var
-        self.current_y_cord = self.heads()[0][1] #self doesn't need to be used bc its a local var
-        current_x_cord = self.current_x_cord #just substitute
-        current_y_cord = self.current_y_cord #just substitute
+    def direction(self, cord): #forgoten parameter
+        current_x_cord = self.heads[0][0] #self doesn't need to be used bc its a local var
+        current_y_cord = self.heads[0][1] #self doesn't need to be used bc its a local var
+      
 
         #use a couple of new lines to prevent cluter
 
-        self.direction = "" #same ishue as self.heads
-        direction = self.direction
 
-        self.ep_placeholder = [] # a great place to put that misssing parameter
-
-        ep_placeholder = self.ep_placeholder #same ishue redunancy
+        move_ep = cord 
 
         #the one part of the code that is executed almost perfectly
-        if ep_placeholder[0] == current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "Error: Current Position" #there is a way we riase errors
+        if move_ep[0] == current_x_cord and move_ep[1] == current_y_cord:
+            print ("Error: Current Position") #there is a way we raise errors
 
-        elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] > current_y_cord:
-            direction = "South" #we can return this install of seting a var and the api calls for a direction id in souths case it is "3"
+        elif move_ep[0] == current_x_cord and move_ep[1] > current_y_cord:
+            return 3 #we can return this install of setting a var and the api calls for a direction id in souths case it is "3"
             
-        elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] < current_y_cord:
-            direction = "North" # return 1
+        elif move_ep[0] == current_x_cord and move_ep[1] < current_y_cord:
+            return 1 # return 1
 
-        elif ep_placeholder[0] > current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "East" #return 2
+        elif move_ep[0] > current_x_cord and move_ep[1] == current_y_cord:
+            return 2 #return 2
 
-        elif ep_placeholder[0] < current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "West" #return 1
+        elif move_ep[0] < current_x_cord and move_ep[1] == current_y_cord:
+            return 0 #return 0
+        
+    def make_move(self):
+        board = self.coilision_aviodance(self.board)
+        move_cord = self.best_cordinate(board)
+        move = self.direction(move_cord)
+        self.post_move(move)
+        print("made move")
+    
+    def run(self):
+        while True:
+            if self.move_needed:
+                self.make_move()
 
-        #overall good programing just needs work on the syntax and conventions
 
+url = 'http://192.168.1.6:8080'
+key0 = 'key0'
+key1 = 'key1'
+key2 = 'key2'
+key3 = 'key3'
+snake0 = ai(key0,url)
+snake1 = ai(key1,url)
+snake2 = ai(key2,url)
+snake3 = ai(key3,url)
 
-url = '192.168.1.6'
-key = 'key0'
-snake = ai(key,url)
-print(snake.board)
+snake0.run()

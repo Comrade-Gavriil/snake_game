@@ -12,11 +12,11 @@ class client:
 
         self.con_params = {'key':self.player_key}
 
-        #check connection
-        if requests.get(self.game_url).status_code == 200:
-            print('Valid Cnnection Established')
-        else:
-            raise ConnectionError
+        # #check connection
+        # if requests.get(self.game_url).status_code == 200:
+        #     print('Valid Cnnection Established')
+        # else:
+        #     raise ConnectionError
 
         #make Endpoints
         self.board_ep = self.game_url + 'board/'
@@ -62,8 +62,11 @@ class client:
         payload = self.con_params
         payload['move'] = move_id
 
+
         #makes post
-        requests.post(self.move_needed_ep, params= payload)
+        r = requests.post(self.move_ep, data= payload)
+        print(r)
+
 
 
     
