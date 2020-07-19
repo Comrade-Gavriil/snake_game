@@ -147,32 +147,29 @@ class ai(client): #inherits client class
 
         
     def direction(self, cord): #forgoten parameter
-        current_x_cord = self.heads()[0][0] #self doesn't need to be used bc its a local var
-        current_y_cord = self.heads()[0][1] #self doesn't need to be used bc its a local var
+        current_x_cord = self.heads[0][0] #self doesn't need to be used bc its a local var
+        current_y_cord = self.heads[0][1] #self doesn't need to be used bc its a local var
       
 
         #use a couple of new lines to prevent cluter
 
 
-        ep_placeholder = cord 
+        move_ep = cord 
 
         #the one part of the code that is executed almost perfectly
-        if ep_placeholder[0] == current_x_cord and ep_placeholder[1] == current_y_cord:
-            print ("Error: Current Position") #there is a way we riase errors
+        if move_ep[0] == current_x_cord and move_ep[1] == current_y_cord:
+            print ("Error: Current Position") #there is a way we raise errors
 
-        elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] > current_y_cord:
-            return 3 #we can return this install of seting a var and the api calls for a direction id in souths case it is "3"
+        elif move_ep[0] == current_x_cord and move_ep[1] > current_y_cord:
+            return 3 #we can return this install of setting a var and the api calls for a direction id in souths case it is "3"
             
-        elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] < current_y_cord:
+        elif move_ep[0] == current_x_cord and move_ep[1] < current_y_cord:
             return 1 # return 1
 
-        elif ep_placeholder[0] > current_x_cord and ep_placeholder[1] == current_y_cord:
+        elif move_ep[0] > current_x_cord and move_ep[1] == current_y_cord:
             return 2 #return 2
 
-        elif ep_placeholder[0] < current_x_cord and ep_placeholder[1] == current_y_cord:
-            return 0 #return 1
+        elif move_ep[0] < current_x_cord and move_ep[1] == current_y_cord:
+            return 0 #return 0
 
         #overall good programing just needs work on the syntax and conventions
-
-snake = ai("key1", "http://localhost:8080")
-print (snake.direction(8,0))
