@@ -74,7 +74,7 @@ class ai(client): #inherits client class
             for numb in totalpath:
                 cord_path.append(numb_to_cord(numb))
 
-            return path
+            return cord_path
 
 
         def best_fScore(): #finds the best fscore in the map, returns cord
@@ -140,29 +140,42 @@ class ai(client): #inherits client class
                     if nieghbor not in open_set:
                         open_set.append(nieghbor)
     
-    @property
+
     def best_cordinate(self, map): 
         path = self._make_path(self.heads[0], self.food, map)
         return path[0]
 
         
-    def _direction_(self):
-        self.current_x_cord = self.heads()[0][0]
-        self.current_y_cord = self.heads()[0][1]
-        current_x_cord = self.current_x_cord
-        current_y_cord = self.current_y_cord
-        self.direction = ""
+    def _direction(self): #forgoten parameter
+        self.current_x_cord = self.heads()[0][0] #self doesn't need to be used bc its a local var
+        self.current_y_cord = self.heads()[0][1] #self doesn't need to be used bc its a local var
+        current_x_cord = self.current_x_cord #just substitute
+        current_y_cord = self.current_y_cord #just substitute
+
+        #use a couple of new lines to prevent cluter
+
+        self.direction = "" #same ishue as self.heads
         direction = self.direction
-        self.ep_placeholder = []
-        ep_placeholder = self.ep_placeholder
+
+        self.ep_placeholder = [] # a great place to put that misssing parameter
+
+        ep_placeholder = self.ep_placeholder #same ishue redunancy
+
+        #the one part of the code that is executed almost perfectly
         if ep_placeholder[0] == current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "Error: Current Position"
+            direction = "Error: Current Position" #there is a way we riase errors
+
         elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] > current_y_cord:
-            direction = "South"
+            direction = "South" #we can return this install of seting a var and the api calls for a direction id in souths case it is "3"
+            
         elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] < current_y_cord:
-            direction = "North"
+            direction = "North" # return 1
+
         elif ep_placeholder[0] > current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "East"
+            direction = "East" #return 2
+
         elif ep_placeholder[0] < current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "West"
+            direction = "West" #return 1
+
+        #overall good programing just needs work on the syntax and conventions
 
