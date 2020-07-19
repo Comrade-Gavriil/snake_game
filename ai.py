@@ -146,36 +146,31 @@ class ai(client): #inherits client class
         return path[0]
 
         
-    def _direction(self): #forgoten parameter
-        self.current_x_cord = self.heads()[0][0] #self doesn't need to be used bc its a local var
-        self.current_y_cord = self.heads()[0][1] #self doesn't need to be used bc its a local var
-        current_x_cord = self.current_x_cord #just substitute
-        current_y_cord = self.current_y_cord #just substitute
+    def _direction(self, cord): #forgoten parameter
+        current_x_cord = self.heads()[0][0] #self doesn't need to be used bc its a local var
+        current_y_cord = self.heads()[0][1] #self doesn't need to be used bc its a local var
+      
 
         #use a couple of new lines to prevent cluter
+        
 
-        self.direction = "" #same ishue as self.heads
-        direction = self.direction
-
-        self.ep_placeholder = [] # a great place to put that misssing parameter
-
-        ep_placeholder = self.ep_placeholder #same ishue redunancy
+        ep_placeholder = cord #same ishue redunancy
 
         #the one part of the code that is executed almost perfectly
         if ep_placeholder[0] == current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "Error: Current Position" #there is a way we riase errors
+            print ("Error: Current Position") #there is a way we riase errors
 
         elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] > current_y_cord:
-            direction = "South" #we can return this install of seting a var and the api calls for a direction id in souths case it is "3"
+            return 3 #we can return this install of seting a var and the api calls for a direction id in souths case it is "3"
             
         elif ep_placeholder[0] == current_x_cord and ep_placeholder[1] < current_y_cord:
-            direction = "North" # return 1
+            return 1 # return 1
 
         elif ep_placeholder[0] > current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "East" #return 2
+            return 2 #return 2
 
         elif ep_placeholder[0] < current_x_cord and ep_placeholder[1] == current_y_cord:
-            direction = "West" #return 1
+            return 0 #return 1
 
         #overall good programing just needs work on the syntax and conventions
 
