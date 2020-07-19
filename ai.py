@@ -145,40 +145,7 @@ class ai(client): #inherits client class
         path = self._make_path(self.heads[0], self.food, map)
         return path[0]
 
-
-            
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         
-
-
         
-
-
-
-        
-
-
-
-
-
-
-
-
     def _direction_(self):
         self.current_x_cord = self.heads()[0][0]
         self.current_y_cord = self.heads()[0][1]
