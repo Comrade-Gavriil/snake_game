@@ -173,3 +173,78 @@ class ai(client): #inherits client class
             return 0 #return 0
 
         #overall good programing just needs work on the syntax and conventions
+
+    def cords_to_board(self, cords):
+        x = cords[0]
+        y = cords[1]
+       
+        board_cords = self.board[y][x]
+        
+        return board_cords
+    def snake_detector(self):
+        snake_1_head = self.heads[1]
+        snake_2_head = self.heads[2]
+        snake_3_head = self.heads[3]
+        
+        board = self.board
+        
+        snake_1 = [snake_1_head]
+        snake_2 = [snake_2_head]
+        snake_3 = [snake_3_head]
+        
+        snake_segment_boolean = True
+        #snake 1 finder
+        
+        
+        
+        while snake_segment_boolean == True:    
+            if cords_to_board([snake_1_head[0] + 1, snake_1_head[1]]) == 1 or cords_to_board([snake_1_head[0] + 1, snake_1_head[1]]) == 2 or cords_to_board([snake_1_head[0] + 1, snake_1_head[1]]) == 3:
+                snake_1.append([snake_1_head[0] + 1, snake_1_head[1]])
+                snake_1_head = snake_1[-1]
+            elif cords_to_board([snake_1_head[0] - 1, snake_1_head[1]]) == 1 or cords_to_board([snake_1_head[0] - 1, snake_1_head[1]]) == 2 or cords_to_board([snake_1_head[0] - 1, snake_1_head[1]]) == 3:
+                snake_1.append([snake_1_head[0] - 1, snake_1_head[1]])
+                snake_1_head = snake_1[-1]
+            elif cords_to_board([snake_1_head[0], snake_1_head[1] + 1]) == 1 or cords_to_board([snake_1_head[0], snake_1_head[1] + 1]) == 2 or cords_to_board([snake_1_head[0], snake_1_head[1] + 1]) == 3:
+                snake_1.append([snake_1_head[0], snake_1_head[1] + 1])
+                snake_1_head = snake_1[-1]
+            elif cords_to_board([snake_1_head[0], snake_1_head[1] - 1]) == 1 or cords_to_board([snake_1_head[0], snake_1_head[1] - 1]) == 2 or cords_to_board([snake_1_head[0], snake_1_head[1] - 1]) == 3:
+                snake_1.append([snake_1_head[0], snake_1_head[1] - 1])
+                snake_1_head = snake_1[-1]
+            else: 
+                snake_segment_boolean = False
+        
+        snake_segment_boolean = True
+        
+        while snake_segment_boolean == True:    
+            if cords_to_board([snake_2_head[0] + 1, snake_2_head[1]]) == 1 or cords_to_board([snake_2_head[0] + 1, snake_2_head[1]]) == 2 or cords_to_board([snake_2_head[0] + 1, snake_2_head[1]]) == 3:
+                snake_2.append([snake_2_head[0] + 1, snake_2_head[1]])
+                snake_2_head = snake_2[-1]
+            elif cords_to_board([snake_2_head[0] - 1, snake_2_head[1]]) == 1 or cords_to_board([snake_2_head[0] - 1, snake_2_head[1]]) == 2 or cords_to_board([snake_2_head[0] - 1, snake_2_head[1]]) == 3:
+                snake_2.append([snake_2_head[0] - 1, snake_2_head[1]])
+                snake_2_head = snake_2[-1]
+            elif cords_to_board([snake_2_head[0], snake_2_head[1] + 1]) == 1 or cords_to_board([snake_2_head[0], snake_2_head[1] + 1]) == 2 or cords_to_board([snake_2_head[0], snake_2_head[1] + 1]) == 3:
+                snake_2.append([snake_2_head[0], snake_2_head[1] + 1])
+                snake_2_head = snake_2[-1]
+            elif cords_to_board([snake_2_head[0], snake_2_head[1] - 1]) == 1 or cords_to_board([snake_2_head[0], snake_2_head[1] - 1]) == 2 or cords_to_board([snake_2_head[0], snake_2_head[1] - 1]) == 3:
+                snake_2.append([snake_2_head[0], snake_2_head[1] - 1])
+                snake_2_head = snake_2[-1]
+            else: 
+                snake_segment_boolean = False
+
+        snake_segment_boolean = True
+        
+        while snake_segment_boolean == True:    
+            if cords_to_board([snake_3_head[0] + 1, snake_3_head[1]]) == 1 or cords_to_board([snake_3_head[0] + 1, snake_3_head[1]]) == 2 or cords_to_board([snake_3_head[0] + 1, snake_3_head[1]]) == 3:
+                snake_3.append([snake_3_head[0] + 1, snake_3_head[1]])
+                snake_3_head = snake_3[-1]
+            elif cords_to_board([snake_3_head[0] - 1, snake_3_head[1]]) == 1 or cords_to_board([snake_3_head[0] - 1, snake_3_head[1]]) == 2 or cords_to_board([snake_3_head[0] - 1, snake_3_head[1]]) == 3:
+                snake_3.append([snake_3_head[0] - 1, snake_3_head[1]])
+                snake_3_head = snake_3[-1]
+            elif cords_to_board([snake_3_head[0], snake_3_head[1] + 1]) == 1 or cords_to_board([snake_3_head[0], snake_3_head[1] + 1]) == 2 or cords_to_board([snake_3_head[0], snake_3_head[1] + 1]) == 3:
+                snake_3.append([snake_3_head[0], snake_3_head[1] + 1])
+                snake_3_head = snake_3[-1]
+            elif cords_to_board([snake_3_head[0], snake_3_head[1] - 1]) == 1 or cords_to_board([snake_3_head[0], snake_3_head[1] - 1]) == 2 or cords_to_board([snake_3_head[0], snake_3_head[1] - 1]) == 3:
+                snake_3.append([snake_3_head[0], snake_3_head[1] - 1])
+                snake_3_head = snake_3[-1]
+            else: 
+                snake_segment_boolean = False
