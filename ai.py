@@ -4,7 +4,7 @@ import numpy as np
 class ai(client): #inherits client class
 
     def __init__ (self,key,url):
-        super.__init__(key, url)
+        super().__init__(key, url)
     
     @staticmethod
     def vector_add(v1,v2):
@@ -121,24 +121,24 @@ class ai(client): #inherits client class
 
             #entire chunk finds the niehbors to the node
             connections = [[0,1],[0,-1],[1,0],[-1,0]]
-            nieghbors = []
+            neighbors = []
             for edge in connections:
-                nieghbor = self.vector_add(current, edge)
-                if board[nieghbor[0]][[nieghbor[1]]] < 0: #checks for colisions
-                    nieghbors.append(nieghbor)
+                neighbor = self.vector_add(current, edge)
+                if board[neighbor[0]][[neighbor[1]]] < 0: #checks for colisions
+                    neighbors.append(neighbor)
             
 
-            for nieghbor in nieghbors: #intarates through each nieghbor
+            for neighbor in neighbors: #intarates through each neighbor
                 tentative_gScore = gScore_map[current[0]][[current[1]]] + 1 #probalbly gscore is just the gscore of the curent node and the distance wich is always 1
 
 
-                if tentative_gScore < gScore_map[nieghbor[0]][[nieghbor[1]]]: #updates gscore on nieghbor if it is lower
-                    came_from[cord_to_numb(current)] = cord_to_numb(nieghbor)
-                    gScore_map[nieghbor[0]][[nieghbor[1]]] = tentative_gScore
-                    fScore_map[nieghbor[0]][[nieghbor[1]]] = tentative_gScore + h(nieghbor)
+                if tentative_gScore < gScore_map[neighbor[0]][[neighbor[1]]]: #updates gscore on neighbor if it is lower
+                    came_from[cord_to_numb(current)] = cord_to_numb(neighbor)
+                    gScore_map[neighbor[0]][[neighbor[1]]] = tentative_gScore
+                    fScore_map[neighbor[0]][[neighbor[1]]] = tentative_gScore + h(neighbor)
 
-                    if nieghbor not in open_set:
-                        open_set.append(nieghbor)
+                    if neighbor not in open_set:
+                        open_set.append(neighbor)
     
 
     def best_cordinate(self, map): 
@@ -146,15 +146,15 @@ class ai(client): #inherits client class
         return path[0]
 
         
-    def _direction(self, cord): #forgoten parameter
+    def direction(self, cord): #forgoten parameter
         current_x_cord = self.heads()[0][0] #self doesn't need to be used bc its a local var
         current_y_cord = self.heads()[0][1] #self doesn't need to be used bc its a local var
       
 
         #use a couple of new lines to prevent cluter
-        
 
-        ep_placeholder = cord #same ishue redunancy
+
+        ep_placeholder = cord 
 
         #the one part of the code that is executed almost perfectly
         if ep_placeholder[0] == current_x_cord and ep_placeholder[1] == current_y_cord:
@@ -174,3 +174,5 @@ class ai(client): #inherits client class
 
         #overall good programing just needs work on the syntax and conventions
 
+snake = ai("key1", "http://localhost:8080")
+print (snake.direction(8,0))
