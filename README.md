@@ -1,4 +1,4 @@
-# Gragaham's gaming snake
+# Gragam's gaming snake
 
 Yup, it's the snake game.
 

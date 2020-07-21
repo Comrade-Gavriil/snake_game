@@ -27,7 +27,6 @@ class ai(client): #inherits client class
             try:
                 for edge in connections:
                     cord = self.vector_add(head,edge)
-                    print(cord[0])
                     map_aviod[cord[0]][cord[1]] = 1
             except IndexError:
                 pass
@@ -56,7 +55,6 @@ class ai(client): #inherits client class
         # numb to card and cord to numb are becuase im dumb
         
         def numb_to_cord (numb): #takes number and turns to cord
-
             a = np.arange(len(board)*len(board))
             a = np.resize(a,(len(board),len(board)))
             cord = np.where(a == numb)
@@ -86,8 +84,38 @@ class ai(client): #inherits client class
                 cord_path.append(numb_to_cord(numb))
 
             return cord_path
+        
+        def if_unrechable():
+            connections = [[0,1],[0,-1],[1,0],[-1,0]]
+            neighbors = []
+            for edge in connections:
+                    neighbor = self.vector_add(current, edge)
+                    if neighbor[0] >= 0 and neighbor[0] <= 24 and neighbor[1] >=0 and neighbor[1] <= 24:
+                        if board[neighbor[0]][neighbor[1]] < 0: #checks for colisions
+                             neighbors.append(neighbor)
+            
+            for node in neighbors:
+                fScore = fScore_map[node[0], node[1]]
 
+                if fScore < best_value:
+                    good_nodes  = [node]
+                    best_value = fScore
 
+                elif fScore == best_value:
+                    good_nodes.append(node)
+            
+            best_node = None
+            best_hScore = 100000
+
+            #finds best node in matching node list
+            for node in good_nodes:
+                hScore = h(node)
+                if hScore <= best_hScore:
+                    best_node = node
+
+            return best_node
+            
+        
         def best_fScore(): #finds the best fscore in the map, returns cord
 
             good_nodes = []
@@ -104,10 +132,6 @@ class ai(client): #inherits client class
                 elif fScore == best_value:
                     good_nodes.append(node)
             
-
-            
-
-            
             best_node = None
             best_hScore = 100000
 
@@ -117,7 +141,6 @@ class ai(client): #inherits client class
                 if hScore <= best_hScore:
                     best_node = node
 
-            
             return best_node
 
          # fscore is the distance from the desination and goal
@@ -143,12 +166,11 @@ class ai(client): #inherits client class
             connections = [[0,1],[0,-1],[1,0],[-1,0]]
             neighbors = []
             for edge in connections:
-                try:
                     neighbor = self.vector_add(current, edge)
-                    if board[neighbor[0]][neighbor[1]] < 0: #checks for colisions
-                        neighbors.append(neighbor)
-                except IndexError:
-                    pass
+                    if neighbor[0] >= 0 and neighbor[0] <= 24 and neighbor[1] >=0 and neighbor[1] <= 24:
+                        if board[neighbor[0]][neighbor[1]] < 0: #checks for colisions
+                             neighbors.append(neighbor)
+                        
 
 
             for neighbor in neighbors: #intarates through each neighbor
@@ -163,6 +185,8 @@ class ai(client): #inherits client class
 
                     if neighbor not in open_set:
                         open_set.append(neighbor)
+
+        
     
 
     def best_cordinate(self, map): 
@@ -205,9 +229,10 @@ class ai(client): #inherits client class
     def make_move(self):
         board = self.coilision_aviodance(self.board)
         move_cord = self.best_cordinate(board)
+
         move = self.direction(move_cord)
+        # print(move)
         self.post_move(move)
-        print("made move")
     
     def run(self):
         while True:
@@ -215,14 +240,18 @@ class ai(client): #inherits client class
                 self.make_move()
 
 
-url = 'http://192.168.1.6:8080'
-key0 = 'key0'
-key1 = 'key1'
-key2 = 'key2'
-key3 = 'key3'
-snake0 = ai(key0,url)
-snake1 = ai(key1,url)
-snake2 = ai(key2,url)
-snake3 = ai(key3,url)
+# url = 'http://localhost:8080'
+# key0 = 'key0'
+# key1 = 'key1'
+# key2 = 'key2'
+# key3 = 'key3'
+# snake0 = ai(key0,url)
+# snake1 = ai(key1,url)
+# snake2 = ai(key2,url)
+# snake3 = ai(key3,url)
 
-snake0.run()
+# while True:
+#     snake0.make_move()
+#     snake1.make_move()
+#     snake2.make_move()
+#     snake3.make_move()
