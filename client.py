@@ -62,8 +62,11 @@ class client:
         payload = self.con_params
         payload['move'] = move_id
 
+
         #makes post
-        requests.post(self.move_needed_ep, params= payload)
+        r = requests.post(self.move_ep, data= payload)
+        print(r)
+
 
 
     
