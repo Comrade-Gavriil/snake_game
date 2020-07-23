@@ -33,7 +33,6 @@ class client:
     def board(self):
         #method to get only board data
         data = self._get_board_data()
-        print (data)
         return data['board']
 
     @property
@@ -72,8 +71,8 @@ class client:
 
     
 
-url = 'http://localhost:8080'
-client1 = client('key1', url)
+# url = 'http://localhost:8080'
+# client1 = client('key1', url)
 
-print (client1.board)
+# print (client1.board)
 
