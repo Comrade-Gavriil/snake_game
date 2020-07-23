@@ -191,7 +191,8 @@ class ai(client): #inherits client class
 
 
     def best_cordinate(self, map): 
-        path = self._make_path(self.heads[0], self.best_move, map, self.board)
+        board = self.board
+        path = self._make_path(self.heads[0], self.food, map, board)
         up = [0,1]
         move = self.vector_add(self.heads[0], up)
         try:
