@@ -191,7 +191,7 @@ class ai(client): #inherits client class
 
 
     def best_cordinate(self, map): 
-        path = self._make_path(self.heads[0], self.best_move, map)
+        path = self._make_path(self.heads[0], self.best_move, map, self.board)
         up = [0,1]
         move = self.vector_add(self.heads[0], up)
         try:
@@ -245,27 +245,27 @@ class ai(client): #inherits client class
         dif_2 = self.vector_sub(self.food, self.heads[2])
         dif_3 = self.vector_sub(self.food, self.heads[3])
         
-        self.destination = []
+        destination = []
         if dif_0[0] + dif_0[1] > dif_1[0] + dif_1[1] or dif_0[0] + dif_0[1] > dif_2[0] + dif_2[1] or dif_0[0] + dif_0[1] > dif_3[0] + dif_3[1]:
-            self.destination = [self.food]
+            destination = self.food
         else:
-            self.destination = [12,12]
+            destination = [12,12]
         
-        return self.destination
+        return destination
 
 
-# url = 'http://localhost:8080'
-# key0 = 'key0'
-# key1 = 'key1'
-# key2 = 'key2'
-# key3 = 'key3'
-# snake0 = ai(key0,url)
-# snake1 = ai(key1,url)
-# snake2 = ai(key2,url)
-# snake3 = ai(key3,url)
+url = 'http://localhost:8080'
+key0 = 'key0'
+key1 = 'key1'
+key2 = 'key2'
+key3 = 'key3'
+snake0 = ai(key0,url)
+snake1 = ai(key1,url)
+snake2 = ai(key2,url)
+snake3 = ai(key3,url)
 
-# while True:
-#     snake0.make_move()
-#     snake1.make_move()
-#     snake2.make_move()
-#     snake3.make_move()
+while True:
+    snake0.make_move()
+    snake1.make_move()
+    snake2.make_move()
+    snake3.make_move()
