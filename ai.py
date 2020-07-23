@@ -238,6 +238,18 @@ class ai(client): #inherits client class
         while True:
             if self.move_needed:
                 self.make_move()
+    
+    def best_move(self):
+        dif_0 = self.vector_sub(self.food, self.heads[0])
+        dif_1 = self.vector_sub(self.food, self.heads[1])
+        dif_2 = self.vector_sub(self.food, self.heads[2])
+        dif_3 = self.vector_sub(self.food, self.heads[3])
+        
+        self.destination = []
+        if dif_0[0] + dif_0[1] > dif_1[0] + dif_1[1] or dif_0[0] + dif_0[1] > dif_2[0] + dif_2[1] or dif_0[0] + dif_0[1] > dif_3[0] + dif_3[1]:
+            self.destination = [self.food]
+        else:
+            self.destination = [12,12]
 
 
 # url = 'http://localhost:8080'
