@@ -24,19 +24,18 @@ class ai(client): #inherits client class
         snakes = self.heads[1:3]
         for head in snakes:
             connections = [[0,1],[0,-1],[1,0],[-1,0]]
-            try:
-                for edge in connections:
-                    cord = self.vector_add(head,edge)
+            for edge in connections:
+                cord = self.vector_add(head,edge)
+                if cord[0] >= 0 and cord[0] <= 24 and cord[1] >=0 and cord[1] <= 24:
                     map_aviod[cord[0]][cord[1]] = 1
-            except IndexError:
-                pass
+
         return map_aviod
 
 
-    def _make_path(self, src, dst, board): #uses the A* path find algo
+    def _make_path(self, src, dst, processed_map, raw_board ): #uses the A* path find algo
         
         #could be manipulated or non manipulated board
-        board = board
+        board = processed_map
         
         #init positions
         x_0 = src[0]
@@ -85,17 +84,20 @@ class ai(client): #inherits client class
 
             return cord_path
         
-        def if_unrechable():
+        def if_unrechable(loc):
             connections = [[0,1],[0,-1],[1,0],[-1,0]]
             neighbors = []
             for edge in connections:
-                    neighbor = self.vector_add(current, edge)
+                    neighbor = self.vector_add(loc, edge)
                     if neighbor[0] >= 0 and neighbor[0] <= 24 and neighbor[1] >=0 and neighbor[1] <= 24:
-                        if board[neighbor[0]][neighbor[1]] < 0: #checks for colisions
+                        if raw_board[neighbor[0]][neighbor[1]] < 0: #checks for colisions
                              neighbors.append(neighbor)
-            
+
+            good_nodes = []
+
             for node in neighbors:
                 fScore = fScore_map[node[0], node[1]]
+                best_value = 1000
 
                 if fScore < best_value:
                     good_nodes  = [node]
@@ -112,8 +114,7 @@ class ai(client): #inherits client class
                 hScore = h(node)
                 if hScore <= best_hScore:
                     best_node = node
-
-            return best_node
+            return [[0,0],best_node]
             
         
         def best_fScore(): #finds the best fscore in the map, returns cord
@@ -185,12 +186,13 @@ class ai(client): #inherits client class
 
                     if neighbor not in open_set:
                         open_set.append(neighbor)
-
         
-    
+        return if_unrechable(self.heads[0])
+
 
     def best_cordinate(self, map): 
-        path = self._make_path(self.heads[0], self.food, map)
+        board = self.board
+        path = self._make_path(self.heads[0], self.food, map, board)
         up = [0,1]
         move = self.vector_add(self.heads[0], up)
         try:
@@ -229,7 +231,6 @@ class ai(client): #inherits client class
     def make_move(self):
         board = self.coilision_aviodance(self.board)
         move_cord = self.best_cordinate(board)
-
         move = self.direction(move_cord)
         # print(move)
         self.post_move(move)
@@ -238,20 +239,21 @@ class ai(client): #inherits client class
         while True:
             if self.move_needed:
                 self.make_move()
+            sleep(.1)
 
 
-# url = 'http://localhost:8080'
-# key0 = 'key0'
-# key1 = 'key1'
-# key2 = 'key2'
-# key3 = 'key3'
-# snake0 = ai(key0,url)
-# snake1 = ai(key1,url)
-# snake2 = ai(key2,url)
-# snake3 = ai(key3,url)
+url = 'http://192.168.1.6:8080'
+key0 = 'key0'
+key1 = 'key1'
+key2 = 'key2'
+key3 = 'key3'
+snake0 = ai(key0,url)
+snake1 = ai(key1,url)
+snake2 = ai(key2,url)
+snake3 = ai(key3,url)
 
-# while True:
-#     snake0.make_move()
-#     snake1.make_move()
-#     snake2.make_move()
-#     snake3.make_move()
+while True:
+    snake0.make_move()
+    snake1.make_move()
+    snake2.make_move()
+    snake3.make_move()

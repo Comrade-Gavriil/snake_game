@@ -1,8 +1,8 @@
 from ai import ai
 
 
-server_url = 'http://localhost:8080'
-key = 'key0'
+server_url = 'http://codekata-snake.herokuapp.com/'
+key = 'Reir1eez'
 
 snake = ai(key,server_url)
 
