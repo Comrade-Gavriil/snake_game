@@ -190,7 +190,7 @@ class ai(client): #inherits client class
     
 
     def best_cordinate(self, map): 
-        path = self._make_path(self.heads[0], self.food, map)
+        path = self._make_path(self.heads[0], self.best_move, map)
         up = [0,1]
         move = self.vector_add(self.heads[0], up)
         try:
@@ -238,7 +238,7 @@ class ai(client): #inherits client class
         while True:
             if self.move_needed:
                 self.make_move()
-    
+    @property
     def best_move(self):
         dif_0 = self.vector_sub(self.food, self.heads[0])
         dif_1 = self.vector_sub(self.food, self.heads[1])
