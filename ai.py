@@ -250,6 +250,8 @@ class ai(client): #inherits client class
             self.destination = [self.food]
         else:
             self.destination = [12,12]
+        
+        return self.destination
 
 
 # url = 'http://localhost:8080'
